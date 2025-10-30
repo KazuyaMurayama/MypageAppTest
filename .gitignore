@@ -35,9 +35,18 @@ build/
 # Environment variables
 .env
 .env.local
+.env.development
 .env.development.local
 .env.test.local
+.env.production
 .env.production.local
+
+# Firebase configuration (機密情報)
+config/firebase-admin-key.json
+firebase-debug.log
+.firebaserc
+firestore-debug.log
+ui-debug.log
 
 # Logs
 logs/

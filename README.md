@@ -73,16 +73,45 @@ mypage-app/
 | 受入・導入完了 | 1-2週間 | 2026年2月27日 |
 | 本番稼働 | - | 2026年3月1日 |
 
+## 環境構成
+
+このプロジェクトは以下の2つの環境をサポートします:
+
+- **開発・テスト環境**: Firebase（クラウド）
+- **本番環境**: オンプレミス（自社サーバー）
+
+詳細は [環境別設定ガイド](./docs/06_environment.md) を参照してください。
+
 ## セットアップ
 
 ### 前提条件
 
 - Node.js 20.x以上
 - Python 3.11以上（バックエンドにPythonを選択した場合）
-- PostgreSQL 15.x または MySQL 8.0+
+- PostgreSQL 15.x または MySQL 8.0+（本番環境のみ）
 - Git
+- Firebase アカウント（開発環境のみ）
 
-### フロントエンド開発環境
+### 開発環境セットアップ（Firebase）
+
+#### 1. 環境変数の設定
+
+```bash
+# .env.development.example をコピー
+cp .env.development.example .env.development
+
+# Firebaseコンソールから取得したAPIキーなどを設定
+# https://console.firebase.google.com/project/kazuya-project-e42f1/settings/general
+```
+
+#### 2. Firebase Admin SDK秘密鍵の配置
+
+```bash
+# config/firebase-admin-key.json を配置
+# ※このファイルは機密情報のため、Gitにはコミットされません
+```
+
+#### 3. フロントエンド開発環境
 
 ```bash
 cd frontend
@@ -90,16 +119,16 @@ npm install
 npm run dev
 ```
 
-### バックエンド開発環境
+#### 4. バックエンド開発環境
 
-#### Node.js版
+**Node.js版**
 ```bash
 cd backend
 npm install
 npm run dev
 ```
 
-#### Python版
+**Python版**
 ```bash
 cd backend
 python -m venv venv
@@ -107,6 +136,10 @@ source venv/bin/activate  # Windows: venv\Scripts\activate
 pip install -r requirements.txt
 python manage.py runserver
 ```
+
+### 本番環境セットアップ（オンプレミス）
+
+詳細は [環境別設定ガイド](./docs/06_environment.md) を参照してください。
 
 ## ドキュメント
 
@@ -117,6 +150,7 @@ python manage.py runserver
 - [データベース設計書](./docs/03_database.md)
 - [API設計書](./docs/04_api.md)
 - [サイトマップ](./docs/05_sitemap.md)
+- [環境別設定ガイド](./docs/06_environment.md)
 
 ## ライセンス
 
