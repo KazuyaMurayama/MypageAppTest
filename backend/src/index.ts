@@ -5,6 +5,7 @@ import admin from 'firebase-admin';
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import { getDirname } from './utils/path.js';
+import authRouter from './routes/auth.js';
 
 const __dirname = getDirname(import.meta.url);
 
@@ -52,6 +53,9 @@ app.get('/api/v1', (req, res) => {
     version: '1.0.0'
   });
 });
+
+// 認証ルート
+app.use('/api/v1/auth', authRouter);
 
 // サーバー起動
 app.listen(PORT, () => {
