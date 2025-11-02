@@ -4,6 +4,9 @@ import dotenv from 'dotenv';
 import admin from 'firebase-admin';
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
+import { getDirname } from './utils/path.js';
+
+const __dirname = getDirname(import.meta.url);
 
 // 環境変数を読み込み
 dotenv.config({ path: resolve(__dirname, '../../.env.development') });
