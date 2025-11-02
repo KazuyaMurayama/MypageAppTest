@@ -94,7 +94,14 @@ mypage-app/
 
 ### 開発環境セットアップ（Firebase）
 
-#### 1. 環境変数の設定
+#### 1. リポジトリのクローン
+
+```bash
+git clone https://github.com/KazuyaMurayama/MypageAppTest.git
+cd MypageAppTest
+```
+
+#### 2. 環境変数の設定
 
 ```bash
 # .env.development.example をコピー
@@ -104,14 +111,34 @@ cp .env.development.example .env.development
 # https://console.firebase.google.com/project/kazuya-project-e42f1/settings/general
 ```
 
-#### 2. Firebase Admin SDK秘密鍵の配置
+.env.developmentファイルに以下の情報を設定:
+
+```env
+VITE_FIREBASE_API_KEY=your-api-key
+VITE_FIREBASE_AUTH_DOMAIN=your-auth-domain
+VITE_FIREBASE_PROJECT_ID=your-project-id
+VITE_FIREBASE_STORAGE_BUCKET=your-storage-bucket
+VITE_FIREBASE_MESSAGING_SENDER_ID=your-sender-id
+VITE_FIREBASE_APP_ID=your-app-id
+NODE_ENV=development
+PORT=3000
+FIREBASE_ADMIN_KEY_PATH=./config/firebase-admin-key.json
+CORS_ORIGIN=http://localhost:5173
+```
+
+#### 3. Firebase Admin SDK秘密鍵の配置
 
 ```bash
 # config/firebase-admin-key.json を配置
 # ※このファイルは機密情報のため、Gitにはコミットされません
 ```
 
-#### 3. フロントエンド開発環境
+Firebase コンソールから秘密鍵をダウンロード:
+1. https://console.firebase.google.com/project/kazuya-project-e42f1/settings/serviceaccounts/adminsdk
+2. 「新しい秘密鍵の生成」をクリック
+3. ダウンロードしたJSONファイルを `config/firebase-admin-key.json` として保存
+
+#### 4. フロントエンド開発環境
 
 ```bash
 cd frontend
@@ -119,22 +146,37 @@ npm install
 npm run dev
 ```
 
-#### 4. バックエンド開発環境
+フロントエンドは http://localhost:5173 で起動します。
 
-**Node.js版**
+#### 5. バックエンド開発環境
+
+**Node.js版（推奨）**
 ```bash
 cd backend
 npm install
 npm run dev
 ```
 
-**Python版**
+バックエンドは http://localhost:3000 で起動します。
+
+#### 6. 動作確認
+
+1. フロントエンド (http://localhost:5173) にアクセス
+2. Firebase接続ステータスが全て「✓ 接続済み」になることを確認
+3. バックエンドのヘルスチェックエンドポイント (http://localhost:3000/health) を確認
+
 ```bash
-cd backend
-python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
-pip install -r requirements.txt
-python manage.py runserver
+# ヘルスチェック
+curl http://localhost:3000/health
+```
+
+期待される応答:
+```json
+{
+  "status": "ok",
+  "timestamp": "2025-11-01T...",
+  "firebase": "connected"
+}
 ```
 
 ### 本番環境セットアップ（オンプレミス）
