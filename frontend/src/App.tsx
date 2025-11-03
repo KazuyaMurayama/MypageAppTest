@@ -3,6 +3,7 @@ import { AuthProvider } from './contexts/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import Login from './pages/Login';
 import ApplicantDashboard from './pages/ApplicantDashboard';
+import ApplicantProfile from './pages/ApplicantProfile';
 import AgentDashboard from './pages/AgentDashboard';
 
 function App() {
@@ -17,6 +18,14 @@ function App() {
             element={
               <ProtectedRoute allowedRoles={['applicant']}>
                 <ApplicantDashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/applicant/profile"
+            element={
+              <ProtectedRoute allowedRoles={['applicant']}>
+                <ApplicantProfile />
               </ProtectedRoute>
             }
           />

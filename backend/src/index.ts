@@ -6,6 +6,7 @@ import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import { getDirname } from './utils/path.js';
 import authRouter from './routes/auth.js';
+import applicantsRouter from './routes/applicants.js';
 
 const __dirname = getDirname(import.meta.url);
 
@@ -61,6 +62,9 @@ app.get('/api/v1', (req, res) => {
 
 // 認証ルート
 app.use('/api/v1/auth', authRouter);
+
+// 応募者ルート
+app.use('/api/v1/applicants', applicantsRouter);
 
 // サーバー起動
 app.listen(PORT, () => {

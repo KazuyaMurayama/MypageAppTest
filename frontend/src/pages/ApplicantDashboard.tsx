@@ -71,8 +71,11 @@ export default function ApplicantDashboard() {
                         <i className="bi bi-person-vcard display-4 text-primary"></i>
                         <h5 className="card-title mt-3">プロフィール</h5>
                         <p className="card-text text-muted">個人情報の確認・編集</p>
-                        <button className="btn btn-primary btn-sm" disabled>
-                          近日公開 (Issue #10)
+                        <button
+                          className="btn btn-primary btn-sm"
+                          onClick={() => navigate('/applicant/profile')}
+                        >
+                          確認する
                         </button>
                       </div>
                     </div>
