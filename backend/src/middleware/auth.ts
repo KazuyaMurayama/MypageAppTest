@@ -64,10 +64,16 @@ export async function authenticate(
 
     // リクエストオブジェクトにユーザー情報を格納
     req.user = {
-      uid: decodedToken.uid,
-      email: decodedToken.email,
-      role: userData?.role
+      uid: decodedToken.uid
     };
+
+    if (decodedToken.email) {
+      req.user.email = decodedToken.email;
+    }
+
+    if (userData?.role) {
+      req.user.role = userData.role;
+    }
 
     next();
   } catch (error) {

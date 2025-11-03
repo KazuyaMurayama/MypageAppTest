@@ -1,33 +1,11 @@
-import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signOut } from 'firebase/auth';
 import { auth } from '../firebase';
-
-interface User {
-  uid: string;
-  email: string;
-  role: string;
-}
+import { useAuth } from '../contexts/AuthContext';
 
 export default function ApplicantDashboard() {
   const navigate = useNavigate();
-  const [user, setUser] = useState<User | null>(null);
-
-  useEffect(() => {
-    // ローカルストレージからユーザー情報を取得
-    const userStr = localStorage.getItem('user');
-    if (userStr) {
-      const userData = JSON.parse(userStr);
-      setUser(userData);
-
-      // 応募者でない場合はログイン画面へ
-      if (userData.role !== 'applicant') {
-        navigate('/login');
-      }
-    } else {
-      navigate('/login');
-    }
-  }, [navigate]);
+  const { userData: user } = useAuth();
 
   const handleLogout = async () => {
     try {

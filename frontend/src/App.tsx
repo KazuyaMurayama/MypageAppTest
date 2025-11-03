@@ -1,4 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider } from './contexts/AuthContext';
+import ProtectedRoute from './components/ProtectedRoute';
 import Login from './pages/Login';
 import ApplicantDashboard from './pages/ApplicantDashboard';
 import AgentDashboard from './pages/AgentDashboard';
@@ -6,12 +8,28 @@ import AgentDashboard from './pages/AgentDashboard';
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Navigate to="/login" replace />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/applicant/dashboard" element={<ApplicantDashboard />} />
-        <Route path="/agent/dashboard" element={<AgentDashboard />} />
-      </Routes>
+      <AuthProvider>
+        <Routes>
+          <Route path="/" element={<Navigate to="/login" replace />} />
+          <Route path="/login" element={<Login />} />
+          <Route
+            path="/applicant/dashboard"
+            element={
+              <ProtectedRoute allowedRoles={['applicant']}>
+                <ApplicantDashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/agent/dashboard"
+            element={
+              <ProtectedRoute allowedRoles={['agent']}>
+                <AgentDashboard />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+      </AuthProvider>
     </BrowserRouter>
   );
 }

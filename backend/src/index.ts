@@ -27,10 +27,15 @@ try {
   const serviceAccountPath = resolve(__dirname, '../../config/firebase-admin-key.json');
   const serviceAccount = JSON.parse(readFileSync(serviceAccountPath, 'utf8'));
 
-  admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-    storageBucket: process.env.VITE_FIREBASE_STORAGE_BUCKET
-  });
+  const initOptions: admin.AppOptions = {
+    credential: admin.credential.cert(serviceAccount)
+  };
+
+  if (process.env.VITE_FIREBASE_STORAGE_BUCKET) {
+    initOptions.storageBucket = process.env.VITE_FIREBASE_STORAGE_BUCKET;
+  }
+
+  admin.initializeApp(initOptions);
 
   console.log('✓ Firebase Admin initialized successfully');
 } catch (error) {

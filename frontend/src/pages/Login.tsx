@@ -2,6 +2,7 @@ import { useState, type FormEvent } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 
 interface LoginForm {
   email: string;
@@ -15,6 +16,7 @@ interface ValidationErrors {
 
 export default function Login() {
   const navigate = useNavigate();
+  const { setUserData } = useAuth();
   const [formData, setFormData] = useState<LoginForm>({
     email: '',
     password: ''
@@ -83,6 +85,9 @@ export default function Login() {
 
       // ユーザー情報をローカルストレージに保存
       localStorage.setItem('user', JSON.stringify(data.user));
+
+      // AuthContextにユーザー情報を設定
+      setUserData(data.user);
 
       // ロールに応じてリダイレクト
       if (data.user.role === 'agent') {
